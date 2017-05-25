@@ -19,11 +19,12 @@ public class Test {
         Utilis u = new Utilis();
 
         InputStream in = c.retrieveLCLApitoInputStream("https://www.pcplus.ca/rest/loyalty/v6/store/5000008");
-        JSONObject obj = u.convertInputStreamToJSON(in);
+        JSONObject obj = c.retrieveStoreJSONObject(in);
 
         // System.out.println(obj);
 
-        System.out.println(obj.getJSONObject("store").get("storeNumber"));
+        System.out.println(obj.get("operatingHours"));
+        System.out.println(c.convertStoreJSONToCSV(obj));
 
         // System.out.println("hi");
 
