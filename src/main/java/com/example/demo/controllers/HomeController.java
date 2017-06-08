@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ public class HomeController {
 		ApiUrlInput apiUrlInput = new ApiUrlInput(); 
 		
 		model.addAttribute("apiUrlInput", apiUrlInput);
+		
 		
 		return "index";
 	}
