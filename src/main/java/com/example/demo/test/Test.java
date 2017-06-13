@@ -21,9 +21,9 @@ public class Test {
         InputStream in = c.retrieveLCLApitoInputStream("https://www.pcplus.ca/rest/loyalty/v6/store/5000008");
         JSONObject obj = c.retrieveStoreJSONObject(in);
 
-         System.out.println(obj);
+        System.out.println(obj);
 
-        System.out.println(obj.get("operatingHours"));
+        System.out.println(obj.get("storeNumber"));
         System.out.println(c.convertStoreJSONToCSV(obj));
 
         // System.out.println("hi");
