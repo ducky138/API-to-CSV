@@ -55,8 +55,7 @@ public class Conversion {
         }
     }
 
-    public InputStream retrieveLCLApitoInputStream(String apiUrl)
-            throws SAXException, MalformedURLException, IOException {
+    public InputStream retrieveLCLApitoInputStream(String apiUrl) throws SAXException, MalformedURLException, IOException {
 
         setCredentials();
         URL url = new URL(apiUrl);
@@ -77,33 +76,8 @@ public class Conversion {
         return obj.getJSONObject("store");
     }
 
-    public Matcher dateRegex(String s) {
-
-        // String s = "7:00 AM - 11:00 PM";
-        String pattern = "(.*)-(.*)";
-        Pattern r = Pattern.compile(pattern);
-
-        Matcher m = r.matcher(s);
-        // if (m.find()) {
-        // System.out.println("Found value:" + m.group(1).trim());
-        // System.out.println("Found value:" + m.group(2).trim());
-        // } else {
-        // System.out.println("NO MATCH");
-        // }
-        return m;
-    }
-
     public HashMap<String, String[]> createOperatingHoursMap(JSONArray arr) throws JSONException, ParseException {
         HashMap<String, String[]> map = new HashMap<String, String[]>();
-        // map.put("Sunday", new String[2]);
-        // map.put("Monday", new String[2]);
-        // map.put("Tuesday", new String[2]);
-        // map.put("Wednesday", new String[2]);
-        // map.put("Thursday", new String[2]);
-        // map.put("Friday", new String[2]);
-        // map.put("Saturday", new String[2]);
-
-        System.out.println(arr);
 
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
@@ -129,6 +103,14 @@ public class Conversion {
             map.put((String) obj.get("day"), hours);
         }
         return map;
+    }
+
+    public String jsonBooleanFlag(JSONObject obj, String att) throws JSONException {
+        if (obj.getBoolean(att)) {
+            return "Y";
+        } else {
+            return "N";
+        }
     }
 
     public StringBuilder convertStoreJSONToCSV(JSONObject obj) throws JSONException, ParseException {
@@ -181,14 +163,14 @@ public class Conversion {
         sb.append(map.get("Saturday")[1] + ","); // SaturdayClose
         sb.append(map.get("Sunday")[0] + ","); // SundayOpen
         sb.append(map.get("Sunday")[1] + ","); // SundayClose
-        sb.append(","); // Latitude
-        sb.append(","); // Longitude
+        sb.append(((JSONObject) obj.get("address")).get("latitude") + ","); // Latitude
+        sb.append(((JSONObject) obj.get("address")).get("longitude") + ","); // Longitude
         sb.append(","); // ImageURL
-        sb.append(","); // Store ID:att:1557
-        sb.append(","); // Location Name French:att:1558
+        sb.append(obj.get("storeNumber") + ","); // Store ID:att:1557
+        sb.append(obj.get("storeNameFr") + ","); // Location Name French:att:1558
         sb.append(","); // Store Type:att:1559
-        sb.append(","); // pcPlus:att:1560
-        sb.append(","); // Bilingual:att:1561
+        sb.append(jsonBooleanFlag(obj, "pcPlus") + ","); // pcPlus:att:1560
+        sb.append(jsonBooleanFlag(obj, "bilingual") + ","); // Bilingual:att:1561
         sb.append(","); // Store Phone Number:att:1562
         sb.append(","); // Store Fax Number:att:1563
         sb.append(","); // Store Email:att:1564
