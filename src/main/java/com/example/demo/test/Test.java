@@ -3,6 +3,7 @@ package com.example.demo.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.text.ParseException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,8 @@ import com.example.demo.utili.Utilis;
 
 public class Test {
 
-    public static void main(String[] args) throws MalformedURLException, SAXException, IOException, JSONException {
+    public static void main(String[] args)
+            throws MalformedURLException, SAXException, IOException, JSONException, ParseException {
 
         Conversion c = new Conversion();
         Utilis u = new Utilis();
@@ -35,7 +37,8 @@ public class Test {
 
         // System.out.println(obj.get("operatingHours"));
 
-        System.out.println(c.createOperatingHoursMap(obj.getJSONArray(("operatingHours"))));
+        // System.out.println(c.createOperatingHoursMap(obj.getJSONArray(("operatingHours"))));
+        // System.out.println(c.createOperatingHoursMap(obj.getJSONArray(("operatingHours"))).get("Monday")[0]);
 
         System.out.println(c.convertStoreJSONToCSV(obj));
 
