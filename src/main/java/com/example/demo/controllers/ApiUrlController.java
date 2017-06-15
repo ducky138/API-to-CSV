@@ -28,7 +28,7 @@ public class ApiUrlController {
     ServletContext context;
 
     @RequestMapping(value = "/apiurlinput", method = RequestMethod.POST)
-    public String apiurlinput(ApiUrlInput apiUrlInput, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public void apiurlinput(ApiUrlInput apiUrlInput, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         // System.out.println(apiUrlInput.getApiUrlString());
         Conversion c = new Conversion();
@@ -91,7 +91,7 @@ public class ApiUrlController {
         }
 
         // return "redirect:/";
-        return "download";
+        // return "download";
     }
 
 }
