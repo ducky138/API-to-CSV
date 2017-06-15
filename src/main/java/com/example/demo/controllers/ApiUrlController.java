@@ -28,7 +28,7 @@ public class ApiUrlController {
     ServletContext context;
 
     @RequestMapping(value = "/apiurlinput", method = RequestMethod.POST)
-    public void apiurlinput(ApiUrlInput apiUrlInput, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String apiurlinput(ApiUrlInput apiUrlInput, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         // System.out.println(apiUrlInput.getApiUrlString());
         Conversion c = new Conversion();
@@ -88,10 +88,12 @@ public class ApiUrlController {
         } catch (JSONException | ParseException | IOException | SAXException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return "redirect:/";
         }
 
         // return "redirect:/";
         // return "download";
+        return null;
     }
 
 }
