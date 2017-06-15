@@ -1,6 +1,8 @@
 package com.example.demo.utili;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -113,6 +115,24 @@ public class Conversion {
         }
     }
 
+    public StringBuilder retriveStringListOfJsonArrayAttributes(JSONObject obj, String arrName, String att) throws JSONException {
+
+        JSONArray arr = obj.getJSONArray(arrName);
+        StringBuilder ret = new StringBuilder("\"");
+
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject currentElement = arr.getJSONObject(i);
+            ret.append(currentElement.get("departmentName"));
+
+            if (i + 1 < arr.length()) {
+                ret.append(", ");
+            }
+        }
+        ret.append("\"");
+        System.out.println(ret);
+        return ret;
+    }
+
     public StringBuilder convertStoreJSONToCSV(JSONObject obj) throws JSONException, ParseException {
 
         HashMap<String, String[]> map = createOperatingHoursMap(obj.getJSONArray("operatingHours"));
@@ -171,11 +191,11 @@ public class Conversion {
         sb.append(","); // Store Type:att:1559
         sb.append(jsonBooleanFlag(obj, "pcPlus") + ","); // pcPlus:att:1560
         sb.append(jsonBooleanFlag(obj, "bilingual") + ","); // Bilingual:att:1561
-        sb.append(","); // Store Phone Number:att:1562
-        sb.append(","); // Store Fax Number:att:1563
+        sb.append(obj.get("phoneNumber") + ","); // Store Phone Number:att:1562
+        sb.append(obj.get("faxNumber") + ","); // Store Fax Number:att:1563
         sb.append(","); // Store Email:att:1564
-        sb.append(","); // Banner Id:att:1565
-        sb.append(","); // Banner Name:att:1566
+        sb.append(((JSONObject) obj.get("banner")).get("bannerId") + ","); // Banner Id:att:1565
+        sb.append(((JSONObject) obj.get("banner")).get("bannerName") + ","); // Banner Name:att:1566
         sb.append(","); // Banner Logo URL:att:1567
         sb.append(","); // Banner Logo URL French:att:1568
         sb.append(","); // Pharmacy License Number:att:1569
@@ -190,8 +210,8 @@ public class Conversion {
         sb.append(","); // Associate2 Salutation:att:1578
         sb.append(","); // Associate3 Name:att:1579
         sb.append(","); // Associate3 Salutation:att:1580
-        sb.append(","); // Department Names:att:1581
-        sb.append(","); // Department Names French:att:1582
+        sb.append(retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentName") + ","); // Department Names:att:1581
+        sb.append(retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentNameFr") + ","); // Department Names French:att:1582
         sb.append(","); // Services Names:att:1583
         sb.append(","); // Services Names French:att:1584
         sb.append(","); // Health Services Names:att:1585
@@ -424,6 +444,13 @@ public class Conversion {
         sb.append(","); // President's Choice:cat:89149
 
         return sb;
+    }
+
+    public File returnCSV(JSONObject obj) {
+
+        String data = convertStoreJSONToCSV(obj).toString();
+
+        FileWriter writer = new FileWriter(data);
     }
 
 }
