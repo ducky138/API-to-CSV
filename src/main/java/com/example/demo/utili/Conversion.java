@@ -1,6 +1,5 @@
 package com.example.demo.utili;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -129,7 +128,6 @@ public class Conversion {
             }
         }
         ret.append("\"");
-        System.out.println(ret);
         return ret;
     }
 
@@ -446,11 +444,20 @@ public class Conversion {
         return sb;
     }
 
-    public File returnCSV(JSONObject obj) {
+    public void returnCSV(String url) throws JSONException, ParseException, IOException, SAXException {
 
+        // https://www.pcplus.ca/rest/loyalty/v6/store/5000008
+        InputStream in = retrieveLCLApitoInputStream(url);
+        JSONObject obj = retrieveStoreJSONObject(in);
         String data = convertStoreJSONToCSV(obj).toString();
 
-        FileWriter writer = new FileWriter(data);
+        String path = "src/main/resources/static/csv/LCL-CSV.csv";
+        FileWriter writer = new FileWriter(path);
+        writer.write(data);
+        writer.flush();
+        writer.close();
+
+        System.out.println("csv write complete!");
     }
 
 }
