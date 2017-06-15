@@ -1,12 +1,16 @@
 package com.example.demo.utili;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -117,17 +121,16 @@ public class Conversion {
     public StringBuilder retriveStringListOfJsonArrayAttributes(JSONObject obj, String arrName, String att) throws JSONException {
 
         JSONArray arr = obj.getJSONArray(arrName);
-        StringBuilder ret = new StringBuilder("\"");
+        StringBuilder ret = new StringBuilder();
 
         for (int i = 0; i < arr.length(); i++) {
             JSONObject currentElement = arr.getJSONObject(i);
-            ret.append(currentElement.get("departmentName"));
+            ret.append(currentElement.get(att));
 
             if (i + 1 < arr.length()) {
                 ret.append(", ");
             }
         }
-        ret.append("\"");
         return ret;
     }
 
@@ -208,8 +211,8 @@ public class Conversion {
         sb.append(","); // Associate2 Salutation:att:1578
         sb.append(","); // Associate3 Name:att:1579
         sb.append(","); // Associate3 Salutation:att:1580
-        sb.append(retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentName") + ","); // Department Names:att:1581
-        sb.append(retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentNameFr") + ","); // Department Names French:att:1582
+        sb.append("\"" + retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentName") + "\"" + ","); // Department Names:att:1581
+        sb.append("\"" + retriveStringListOfJsonArrayAttributes(obj, "departments", "departmentNameFr") + "\"" + ","); // Department Names French:att:1582
         sb.append(","); // Services Names:att:1583
         sb.append(","); // Services Names French:att:1584
         sb.append(","); // Health Services Names:att:1585
@@ -452,10 +455,17 @@ public class Conversion {
         String data = convertStoreJSONToCSV(obj).toString();
 
         String path = "src/main/resources/static/csv/LCL-CSV.csv";
-        FileWriter writer = new FileWriter(path);
+        File file = new File(path);
+        Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
         writer.write(data);
         writer.flush();
         writer.close();
+        // FileWriter writer = new FileWriter(path);
+        // writer.write(data);
+        // writer.flush();
+        // writer.close();
+
+        System.out.println(data);
 
         System.out.println("csv write complete!");
     }
