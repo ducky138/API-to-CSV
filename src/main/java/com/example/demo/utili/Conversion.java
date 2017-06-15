@@ -1,16 +1,13 @@
 package com.example.demo.utili;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -118,7 +115,7 @@ public class Conversion {
         }
     }
 
-    public StringBuilder retriveStringListOfJsonArrayAttributes(JSONObject obj, String arrName, String att) throws JSONException {
+    public StringBuilder retriveStringListOfJsonArrayAttributes(JSONObject obj, String arrName, String att) throws JSONException, UnsupportedEncodingException {
 
         JSONArray arr = obj.getJSONArray(arrName);
         StringBuilder ret = new StringBuilder();
@@ -131,10 +128,19 @@ public class Conversion {
                 ret.append(", ");
             }
         }
+
+        // --------------------------------- DON'T DELETE. MIGHT COME IN HANDY IF HAVE TO ENCODE SHIT ---------------------------------
+        // String text = ret.toString();
+        // byte[] byteText = text.getBytes(Charset.forName("UTF-8"));
+        // // To get original string from byte.
+        // String originalString = new String(byteText, "UTF-8");
+        // System.out.println(ret);
+        //
+        // return originalString;
         return ret;
     }
 
-    public StringBuilder convertStoreJSONToCSV(JSONObject obj) throws JSONException, ParseException {
+    public StringBuilder convertStoreJSONToCSV(JSONObject obj) throws JSONException, ParseException, UnsupportedEncodingException {
 
         HashMap<String, String[]> map = createOperatingHoursMap(obj.getJSONArray("operatingHours"));
 
@@ -455,15 +461,16 @@ public class Conversion {
         String data = convertStoreJSONToCSV(obj).toString();
 
         String path = "src/main/resources/static/csv/LCL-CSV.csv";
-        File file = new File(path);
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-        writer.write(data);
-        writer.flush();
-        writer.close();
-        // FileWriter writer = new FileWriter(path);
+        // --------------------------------- DON'T DELETE. MIGHT COME IN HANDY IF HAVE TO ENCODE SHIT ---------------------------------
+        // File file = new File(path);
+        // Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
         // writer.write(data);
         // writer.flush();
         // writer.close();
+        FileWriter writer = new FileWriter(path);
+        writer.write(data);
+        writer.flush();
+        writer.close();
 
         System.out.println(data);
 
