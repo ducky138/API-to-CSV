@@ -10,7 +10,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,7 @@ public class ApiUrlController {
     @Autowired
     ServletContext context;
 
-    @RequestMapping(value = "/apiurlinput", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String apiurlinput(ApiUrlInput apiUrlInput, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         // System.out.println(apiUrlInput.getApiUrlString());
@@ -90,8 +89,9 @@ public class ApiUrlController {
             // TODO Auto-generated catch block
             e.printStackTrace();
             String error = e.toString();
-            model.addAttribute(error);
-            return "redirect:/";
+            model.addAttribute("error", error); // DOESNT WORK BECAUSE REDIRECT WILL REFRESH IT SO MODEL ATTRIBUTES ARE GONE?
+            // return "redirect:/";
+            return "index";
         }
 
         // return "redirect:/";

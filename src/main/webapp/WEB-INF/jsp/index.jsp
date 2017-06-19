@@ -32,29 +32,28 @@
 
 <h1>LCL API-to-CSV</h1>
 
-<script>
-  var model=[];
-  model.paramOne="${model.error}";
-  
-  $(document).ready(function() {
-	   alert(model.paramOne);
-	});
-  
-</script>
-
-
 
 
 <div align="center" class="urlinput">
-	<form:form action="/apiurlinput" method="post" commandName="apiUrlInput">
-	    <form:input path="apiUrlString" style="width:500px"/>
+	<form:form action="/" method="post" commandName="apiUrlInput" >
+	    <form:input path="apiUrlString" style="width:500px" id="apiUrlInputForm"/>
 	    <input type="submit" value="API-to-CSV" />
 	</form:form>
 </div>
 
+<!--  
+<div id="errorMessage">
+	${error}
+</div>
+-->
 
+<script>
+    document.getElementById("apiUrlInputForm").value = "";
 
-<!-- <a href="${pageContext.request.contextPath}/csv/test.txt" download>Download</a>  -->
+//    document.getElementById("errorMessage").value = "";
+
+</script>
+
 
 
 </body>
