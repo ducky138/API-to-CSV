@@ -30,6 +30,8 @@
 </head>
 <body>
 
+<h1>LCL API-to-CSV</h1>
+
 <div align="center" class="urlinput">
 	<form:form action="/apiurlinput" method="post" commandName="apiUrlInput">
 	    <form:input path="apiUrlString" style="width:500px"/>
