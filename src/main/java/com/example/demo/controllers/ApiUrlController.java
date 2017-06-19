@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,6 +89,8 @@ public class ApiUrlController {
         } catch (JSONException | ParseException | IOException | SAXException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            String error = e.toString();
+            model.addAttribute(error);
             return "redirect:/";
         }
 
