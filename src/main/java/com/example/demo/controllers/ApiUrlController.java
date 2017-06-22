@@ -32,11 +32,11 @@ public class ApiUrlController {
 
         // System.out.println(apiUrlInput.getApiUrlString());
         Conversion c = new Conversion();
+
+        request.getSession().setAttribute("error", "");
+
         try {
             c.returnCSV(apiUrlInput.getApiUrlString());
-            System.out.println("got here");
-
-            ///////////////////////////////////////////////////////////
 
             String fileName = "LCL-CSV.csv";
 
@@ -63,39 +63,16 @@ public class ApiUrlController {
                 System.out.println("Sorry File not found!!!!");
             }
 
-            ///////////////////////////////////////////////////////////
-
-            // String filePath = "src/main/resources/static/csv/LCL-CSV.csv";
-            // byte[] byteArray = Files.readAllBytes(new File(filePath).toPath());
-            //
-            // response.setContentType("YOUR CONTENT TYPE HERE");
-            // response.setHeader("Content-Disposition", "filename=\"LCL-CSV.csv\"");
-            // response.setContentLength(byteArray.length);
-            // OutputStream os = response.getOutputStream();
-            //
-            // try {
-            // os.write(byteArray, 0, byteArray.length);
-            // } catch (Exception excp) {
-            // // handle error
-            // } finally {
-            // os.close();
-            // }
-
-            // return "download";
-
-            ///////////////////////////////////////////////////////////
-
         } catch (JSONException | ParseException | IOException | SAXException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             String error = e.toString();
-            model.addAttribute("error", error); // DOESNT WORK BECAUSE REDIRECT WILL REFRESH IT SO MODEL ATTRIBUTES ARE GONE?
-            // return "redirect:/";
-            return "index";
+            // model.addAttribute("error", error); // DOESNT WORK BECAUSE REDIRECT WILL REFRESH IT SO MODEL ATTRIBUTES ARE GONE?
+            request.getSession().setAttribute("error", error);
+            return "redirect:/";
+            // return "index";
         }
 
-        // return "redirect:/";
-        // return "download";
         return null;
     }
 

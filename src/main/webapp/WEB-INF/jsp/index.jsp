@@ -28,7 +28,7 @@
 
 <title>API-to-CSV</title>
 </head>
-<body>
+<body onload="errorCheck()">
 
 <h1>LCL API-to-CSV</h1>
 
@@ -41,17 +41,16 @@
 	</form:form>
 </div>
 
-<!--  
-<div id="errorMessage">
-	${error}
+
+<div id="errorMessage" msg="${sessionScope.error}">
 </div>
--->
+
+
+
+
 
 <script>
     document.getElementById("apiUrlInputForm").value = "";
-
-//    document.getElementById("errorMessage").value = "";
-
 </script>
 
 
