@@ -7,3 +7,7 @@ h1 {
     font-size: 400%;
     text-align: center;
 }
+
+.errorMessage {
+	text-align: center;
+}

@@ -42,7 +42,7 @@
 </div>
 
 
-<div id="errorMessage" msg="${sessionScope.error}">
+<div id="errorMessage" class="errorMessage" msg="${sessionScope.error}">
 </div>
 
 
